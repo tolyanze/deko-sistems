@@ -1,16 +1,23 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <h1>Тестовое задание для Деко Системс</h1>
+  <duration-stay>
+    
+  </duration-stay>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+import DurationStay from './components/DurationStay.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-    HelloWorld
+    DurationStay
+  },
+  data() {
+    return {
+      num:0,
+    }
   }
 })
 </script>
