@@ -20,10 +20,11 @@ import moment from 'moment'
 
 export default defineComponent({
   name: 'DurationStay',
-  props: {
-    msg: String
+  props:{
+    msg:String
   },
   data() {
+    
     return {
       num: 3,
       offsetFerstDay:0
@@ -60,7 +61,7 @@ export default defineComponent({
     dataFirstFn(){
       const resOffsetFirst:string = moment().add(this.offsetFerstDay, 'days').format("YYYY-MM-DD")
       const resNumFirst:string = moment().format("YYYY-MM-DD")
-      return this.offsetFerstDay  ? resOffsetFirst : resNumFirst
+      return this.offsetFerstDay ? resOffsetFirst : resNumFirst
     },
     dataSecondFn(){
       const resOffset:string = moment().add(this.offsetFerstDay + this.num, 'days').format("YYYY-MM-DD")
@@ -68,8 +69,6 @@ export default defineComponent({
       return this.offsetFerstDay ? resOffset : resNumSecond
     }
   },
-  watch: {
-  }
 })
 </script>
 

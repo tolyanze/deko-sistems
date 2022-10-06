@@ -1,8 +1,6 @@
 <template>
   <h1>Тестовое задание для Деко Системс</h1>
-  <duration-stay msg="ват">
-    
-  </duration-stay>
+  <duration-stay :msg="msg"></duration-stay>
 </template>
 
 <script lang="ts">
@@ -17,6 +15,7 @@ export default defineComponent({
   data() {
     return {
       num:0,
+      msg:String
     }
   }
 })
