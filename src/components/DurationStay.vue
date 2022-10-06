@@ -1,16 +1,20 @@
 <template>
-  <div class="hello">
-    <input type="date" :value="dataOne" @change="switchSelect" ref="first">
-    <button @click="minuse">-</button>
-    <input :value="num"/>
-    <!-- <input :value="number"/> -->
-    <button @click="pluse">+</button>
-    <input type="date" :value="dataSecond">
+  <div class="flex">
+    <input type="date" :value="dataFirstFn" @change="calcDataFirst">
+    <div class="flex-column">
+      <p>ночей</p>
+      <div>
+        <button @click="minuse">-</button>
+        {{num}}
+        <button @click="pluse">+</button>
+      </div>
+    </div>
+    <input type="date" :value="dataSecondFn" @change="calcDataSecond">
   </div>
 </template>
 
 <script lang="ts">
-import {  ref, onMounted, defineComponent } from 'vue'
+import {defineComponent } from 'vue'
 import moment from 'moment'
 
 
@@ -21,8 +25,8 @@ export default defineComponent({
   },
   data() {
     return {
-      num: 7,
-      first: ref(),
+      num: 3,
+      offsetFerstDay:0
     }
   },
   methods: {
@@ -30,40 +34,59 @@ export default defineComponent({
       this.num = this.num + 1;
     },
     minuse(){
-      this.num = this.num - 1;
+      this.num <= 0 ? 0 : this.num = this.num - 1
     },
-    switchSelect(event: Event) {
-      console.log((event.target as HTMLInputElement).value)
-    }
+    checkFirst(vol: number){
+      return vol <= 0 ? this.offsetFerstDay = vol : this.offsetFerstDay = vol
+    },
+    checkSecond(vol: number){
+      return vol <= 0 ? this.num = 0 : this.num = vol
+    },
+    calcDataFirst(event: Event) {
+      const dayFirst:number = (+(moment((event.target as HTMLInputElement).value).format("x"))- this.newData())/86400000
+      this.checkFirst(dayFirst)
+    },
+    calcDataSecond(event: Event) {
+      const daySecond = (+(moment((event.target as HTMLInputElement).value).format("x")) - this.newData())/86400000
+      this.checkSecond(daySecond)
+    },
+    newData(){
+      const nData = moment().format("YYYY-MM-DD")
+      const num:any = moment(nData).format("x")
+      return +num
+    },
   },
   computed: {
-    dataOne(){
-      return moment().format("YYYY-MM-DD")
+    dataFirstFn(){
+      const resOffsetFirst:string = moment().add(this.offsetFerstDay, 'days').format("YYYY-MM-DD")
+      const resNumFirst:string = moment().format("YYYY-MM-DD")
+      return this.offsetFerstDay  ? resOffsetFirst : resNumFirst
     },
-    dataSecond(){
-      return moment().add(this.num , 'days').format("YYYY-MM-DD")
-    },
-    number(){
-      return 7
+    dataSecondFn(){
+      const resOffset:string = moment().add(this.offsetFerstDay + this.num, 'days').format("YYYY-MM-DD")
+      const resNumSecond:string = moment().add(this.num, 'days').format("YYYY-MM-DD")
+      return this.offsetFerstDay ? resOffset : resNumSecond
     }
+  },
+  watch: {
   }
 })
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
+.flex-column{
+  display: flex;
+  flex-direction: column;
   margin: 0 10px;
 }
-a {
-  color: #42b983;
+p{
+  margin: 0;
 }
 </style>

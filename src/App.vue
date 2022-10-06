@@ -1,6 +1,6 @@
 <template>
   <h1>Тестовое задание для Деко Системс</h1>
-  <duration-stay>
+  <duration-stay msg="ват">
     
   </duration-stay>
 </template>
